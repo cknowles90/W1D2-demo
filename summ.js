@@ -7,6 +7,11 @@
 const args = process.argv.slice(2);
 console.log("args:", args);
 
+// Ed case: We need at least 2 argyments.
+if (args.length < 2) {
+  console.log("Error, please enter at least 2 arguments");
+  process.exit();
+}
 // create an accumulator for the sum
 let total = 0;
 
@@ -14,9 +19,20 @@ let total = 0;
 // for off
 
 for (let arg of args) {
-  total += Number(arg);
+  // Edge case: If any argument is not a whole number, skip it.
 
-  console.log("args:", typeof Number(arg), "total:", total);
+  const convertedNum = Number(arg);
+  // Edge case: If any argument is not a number, output an error message.
+
+  if (isNaN(convertedNum)) {
+    console.log("Error, please enter numbers only");
+    // stop the execution
+    process.exit(); // explicit
+  }
+  if (Number.isInteger(convertedNum)) {
+    total += convertedNum;
+    console.log("args:", convertedNum, "total:", total);
+  }
 }
 
 
